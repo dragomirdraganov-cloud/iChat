@@ -12,6 +12,7 @@ import SwiftData
 struct ChatListView: View {
     @Environment(AppState.self) private var appState
     @Environment(\.modelContext) private var modelContext
+    
     @Query private var chats: [Chat]
     @Query private var users: [User]
     

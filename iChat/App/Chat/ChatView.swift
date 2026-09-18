@@ -8,6 +8,10 @@
 import SwiftUI
 
 struct ChatView: View {
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+
+    @FocusState private var isInputFocused: Bool
+    
     let chat: Chat
     let currentUserID: UUID
     
@@ -27,31 +31,44 @@ struct ChatView: View {
                             isMine: message.sender?.id == currentUserID
                         )
                         .id(message.id)
+                        .transition(.offset(y: 12).combined(with: .opacity))
                     }
                 }
+                .animation(reduceMotion ? nil : .snappy(duration: 0.28), value: messages.map(\.id))
                 .padding(.horizontal)
                 .padding(.vertical, 8)
             }
-            .onChange(of: messages.count) {
-                scrollToBottom(proxy)
+            .onChange(of: messages.last?.id) { oldID, newID in
+                guard oldID != newID, newID != nil else { return }
+
+                if reduceMotion {
+                    scrollToBottom(proxy)
+                } else {
+                    withAnimation(.easeOut(duration: 0.28)) {
+                        scrollToBottom(proxy)
+                    }
+                }
             }
             .onAppear {
                 scrollToBottom(proxy)
+            }
+            .scrollDismissesKeyboard(.automatic)
+            .contentShape(Rectangle())
+            .onTapGesture {
+                isInputFocused = false
             }
         }
         .navigationTitle(chat.title ?? "")
         .navigationBarTitleDisplayMode(.inline)
         .safeAreaInset(edge: .bottom) {
-            MessageInputView(chat: chat)
+            MessageInputView(chat: chat, currentUserID: currentUserID, inputFocus: $isInputFocused)
         }
         .toolbarVisibility(.hidden, for: .tabBar)
     }
     
     private func scrollToBottom(_ proxy: ScrollViewProxy) {
-        guard let lastMessage = chat.lastMessage else {
-            return
-        }
-        
-        proxy.scrollTo(lastMessage.id, anchor: .bottom)
+        guard let lastMessageID = messages.last?.id else { return }
+
+        proxy.scrollTo(lastMessageID, anchor: .bottom)
     }
 }
