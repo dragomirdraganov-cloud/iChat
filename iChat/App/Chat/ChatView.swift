@@ -38,6 +38,7 @@ struct ChatView: View {
                 .padding(.horizontal)
                 .padding(.vertical, 8)
             }
+            .defaultScrollAnchor(.bottom, for: .sizeChanges)
             .onChange(of: messages.last?.id) { oldID, newID in
                 guard oldID != newID, newID != nil else { return }
 
@@ -49,10 +50,15 @@ struct ChatView: View {
                     }
                 }
             }
+            .onChange(of: isInputFocused) { _, isFocused in
+//                if isFocused {
+                    scrollToBottom(proxy)
+//                }
+            }
             .onAppear {
                 scrollToBottom(proxy)
             }
-            .scrollDismissesKeyboard(.automatic)
+            .scrollDismissesKeyboard(.immediately)
             .contentShape(Rectangle())
             .onTapGesture {
                 isInputFocused = false
