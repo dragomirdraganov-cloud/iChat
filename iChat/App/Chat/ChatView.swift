@@ -50,20 +50,30 @@ struct ChatView: View {
                     }
                 }
             }
-            .onChange(of: isInputFocused) { _, _ in
-                scrollToBottom(proxy)
-            }
             .defaultScrollAnchor(.bottom, for: .initialOffset)
             .defaultScrollAnchor(.bottom, for: .sizeChanges)
+            .onChange(of: isInputFocused) { _, isFocused in
+                guard isFocused else { return }
+
+                Task { @MainActor in
+                    await Task.yield()
+
+                    withAnimation(.easeOut(duration: 0.25)) {
+                        scrollToBottom(proxy)
+                    }
+                }
+            }
             .scrollDismissesKeyboard(.immediately)
             .contentShape(Rectangle())
-            .onTapGesture {
-                isInputFocused = false
-            }
+            .simultaneousGesture(
+                TapGesture().onEnded {
+                    isInputFocused = false
+                }
+            )
         }
         .navigationTitle(chat.title ?? "")
         .navigationBarTitleDisplayMode(.inline)
-        .safeAreaBar(edge: .bottom, spacing: 0) {
+        .safeAreaInset(edge: .bottom, spacing: 0) {
             MessageInputView(chat: chat, currentUserID: currentUserID, inputFocus: $isInputFocused)
         }
         .toolbarVisibility(.hidden, for: .tabBar)
