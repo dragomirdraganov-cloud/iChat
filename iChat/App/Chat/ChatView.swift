@@ -38,7 +38,7 @@ struct ChatView: View {
                 .padding(.horizontal)
                 .padding(.vertical, 8)
             }
-            .defaultScrollAnchor(.bottom, for: .sizeChanges)
+            .scrollEdgeEffectStyle(.soft, for: .bottom)
             .onChange(of: messages.last?.id) { oldID, newID in
                 guard oldID != newID, newID != nil else { return }
 
@@ -50,14 +50,11 @@ struct ChatView: View {
                     }
                 }
             }
-            .onChange(of: isInputFocused) { _, isFocused in
-//                if isFocused {
-                    scrollToBottom(proxy)
-//                }
-            }
-            .onAppear {
+            .onChange(of: isInputFocused) { _, _ in
                 scrollToBottom(proxy)
             }
+            .defaultScrollAnchor(.bottom, for: .initialOffset)
+            .defaultScrollAnchor(.bottom, for: .sizeChanges)
             .scrollDismissesKeyboard(.immediately)
             .contentShape(Rectangle())
             .onTapGesture {
@@ -66,7 +63,7 @@ struct ChatView: View {
         }
         .navigationTitle(chat.title ?? "")
         .navigationBarTitleDisplayMode(.inline)
-        .safeAreaInset(edge: .bottom) {
+        .safeAreaBar(edge: .bottom, spacing: 0) {
             MessageInputView(chat: chat, currentUserID: currentUserID, inputFocus: $isInputFocused)
         }
         .toolbarVisibility(.hidden, for: .tabBar)
