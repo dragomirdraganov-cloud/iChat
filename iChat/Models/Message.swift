@@ -12,14 +12,14 @@ import SwiftData
 //    var id: UUID
 //    var chatID: UUID
 //    var senderID: UUID
-//    
+//
 //    var content: String
-//    
+//
 //    var sentAt: Date
 //    var editedAt: Date?
-//    
+//
 //    var replayToMessageID: UUID?
-//    
+//
 //    init(id: UUID = UUID(), chatID: UUID, senderID: UUID, content: String, sentAt: Date = .now, editedAt: Date? = nil, replayToMessageID: UUID? = nil) {
 //        self.id = id
 //        self.chatID = chatID
@@ -34,17 +34,17 @@ import SwiftData
 @Model
 final class Message {
     var id: UUID
-    
+
     var chat: Chat?
     var sender: User?
-    
+
     var content: String
-    
+
     var sentAt: Date
     var editedAt: Date?
-    
+
     var replayToMessageID: UUID?
-    
+
     init(id: UUID = UUID(), chat: Chat? = nil, sender: User? = nil, content: String, sentAt: Date = .now, editedAt: Date? = nil, replayToMessageID: UUID? = nil) {
         self.id = id
         self.chat = chat

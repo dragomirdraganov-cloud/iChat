@@ -10,13 +10,13 @@ import SwiftUI
 struct MessageBubbleView: View {
     let message: Message
     let isMine: Bool
-    
+
     var body: some View {
         HStack {
             if isMine {
                 Spacer(minLength: 60)
             }
-            
+
             VStack(alignment: isMine ? .trailing : .leading, spacing: 4) {
                 Text(message.content)
                     .padding(.horizontal, 12)
@@ -27,10 +27,10 @@ struct MessageBubbleView: View {
                     }
                     .foregroundStyle(isMine ? Color.white : Color.primary)
                 Text(message.sentAt, format: .dateTime.hour().minute())
-                    .font(.caption2)
+                    .font(.appCaption2)
                     .foregroundStyle(.secondary)
             }
-            
+
             if !isMine {
                 Spacer(minLength: 60)
             }

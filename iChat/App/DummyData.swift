@@ -12,8 +12,8 @@ import SwiftUI
 enum DummyData {
 
     @MainActor
-    static func insertIfNeeded(into context: ModelContext, appState: AppState) throws {
-        
+    static func insertIfNeeded(into context: ModelContext) throws {
+
         let chatCount = try context.fetchCount(
             FetchDescriptor<Chat>()
         )
@@ -33,7 +33,7 @@ enum DummyData {
         let manu = User(
             username: "Manu"
         )
-        
+
         context.insert(me)
         context.insert(sergio)
         context.insert(manu)
@@ -42,7 +42,7 @@ enum DummyData {
             chatType: .direct,
             title: "Programación"
         )
-        
+
         let friendsChat = Chat(
             chatType: .group,
             title: "Amigos"
@@ -86,7 +86,7 @@ enum DummyData {
             sender: me,
             content: "Siii, asi probamos el \"How to fish\"!!"
         )
-        
+
         let friendsMessage3 = Message(
             chat: friendsChat,
             sender: sergio,
@@ -98,15 +98,15 @@ enum DummyData {
         context.insert(friendsMessage3)
 
         friendsChat.lastMessage = friendsMessage3
-        
+
         if context.hasChanges {
             try context.save()
         }
     }
-    
+
     @MainActor
     static func deleteAll(from context: ModelContext) throws {
-        
+
         let messages = try context.fetch(
             FetchDescriptor<Message>()
         )

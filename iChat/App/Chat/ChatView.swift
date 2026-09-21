@@ -11,16 +11,16 @@ struct ChatView: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
 
     @FocusState private var isInputFocused: Bool
-    
+
     let chat: Chat
     let currentUserID: UUID
-    
+
     private var messages: [Message] {
         chat.messages.sorted {
             $0.sentAt < $1.sentAt
         }
     }
-    
+
     var body: some View {
         ScrollViewReader { proxy in
             ScrollView {
@@ -78,7 +78,7 @@ struct ChatView: View {
         }
         .toolbarVisibility(.hidden, for: .tabBar)
     }
-    
+
     private func scrollToBottom(_ proxy: ScrollViewProxy) {
         guard let lastMessageID = messages.last?.id else { return }
 

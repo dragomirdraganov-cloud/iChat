@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ChatRowView: View {
     let chat: Chat
-    
+
     var body: some View {
         HStack(spacing: 12) {
             Circle()
@@ -22,15 +22,15 @@ struct ChatRowView: View {
             VStack(alignment: .leading, spacing: 6) {
                 HStack {
                     Text(chat.title ?? "")
-                        .font(.headline)
-                    
+                        .font(.appHeadline)
+
                     Spacer()
-                    
+
                     Text(chat.lastMessage?.sentAt ?? .now, style: .time)
-                        .font(.caption)
+                        .font(.appCaption)
                         .foregroundStyle(.secondary)
                 }
-                
+
                 HStack(spacing: 4) {
                     Text("\(chat.lastMessage?.sender?.username ?? ""):")
                         .fontWeight(.medium)
@@ -38,7 +38,7 @@ struct ChatRowView: View {
                         .foregroundStyle(.secondary)
                         .lineLimit(1)
                 }
-                .font(.subheadline)
+                .font(.appSubheadline)
             }
         }
         .padding(.vertical, 4)

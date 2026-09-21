@@ -11,6 +11,6 @@ import Observation
 @MainActor
 final class ChatListViewModel {
     init() {
-        
+
     }
 }

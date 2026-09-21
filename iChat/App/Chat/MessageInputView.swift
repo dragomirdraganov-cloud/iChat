@@ -22,7 +22,7 @@ struct MessageInputView: View {
     var body: some View {
         HStack(alignment: .bottom, spacing: 12) {
             TextField("Mensaje", text: $text, axis: .vertical)
-                .font(.body)
+                .font(.appBody)
                 .lineLimit(1...6)
                 .padding(8)
                 .frame(minHeight: initialHeight)
@@ -31,7 +31,7 @@ struct MessageInputView: View {
             if canSend {
                 Button(action: sendMessage) {
                     Image(systemName: "paperplane.fill")
-                        .font(.body)
+                        .font(.appBody)
                         .fontWeight(.semibold)
                         .frame(width: initialHeight, height: initialHeight)
                 }

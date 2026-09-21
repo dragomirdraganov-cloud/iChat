@@ -33,15 +33,15 @@ import SwiftData
 final class Chat {
     var id: UUID
     var chatType: ChatType
-    
+
     var title: String?
     var createdAt: Date
-    
+
     @Relationship(deleteRule: .cascade, inverse: \Message.chat)
     var messages: [Message] = []
-    
+
     var lastMessage: Message?
-    
+
     init(id: UUID = UUID(), chatType: ChatType, title: String? = nil, createdAt: Date = .now) {
         self.id = id
         self.chatType = chatType
