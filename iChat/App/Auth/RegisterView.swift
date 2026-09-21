@@ -18,63 +18,87 @@ struct RegisterView: View {
     @State private var errorMessage: String?
 
     var body: some View {
+        VStack(spacing: 24) {
+            VStack(spacing: 14) {
+                AppTextField("Nombre de usuario",
+                             text: $username,
+                             textContentType: .username,
+                             submitLabel: .next,
+                             focus: $focusedField,
+                             equals: .username
+                ) {
+                    focusedField = .password
+                }
 
-
-
-        Form {
-            Section {
-                TextField("Nombre de usuario", text: $username)
-                    .textContentType(.username)
-                    .textInputAutocapitalization(.never)
-                    .autocorrectionDisabled()
-                    .submitLabel(.next)
-                    .focused($focusedField, equals: .username)
-                    .onSubmit {
-                        focusedField = .password
-                    }
-
-                SecureField("Contraseña", text: $password)
-                    .textContentType(.newPassword)
-                    .submitLabel(.next)
-                    .focused($focusedField, equals: .password)
-                    .onSubmit {
+                VStack(spacing: 6) {
+                    AppTextField("Contraseña",
+                                 text: $password,
+                                 isSecure: true,
+                                 textContentType: .newPassword,
+                                 submitLabel: .next,
+                                 focus: $focusedField,
+                                 equals: .password
+                    ) {
                         focusedField = .passwordConfirmation
                     }
 
-                SecureField("Repite la contraseña", text: $passwordConfirmation)
-                    .textContentType(.newPassword)
-                    .submitLabel(.done)
-                    .focused($focusedField, equals: .passwordConfirmation)
-                    .onSubmit(register)
-            } footer: {
-                Text("Usa al menos 3 caracteres para el usuario y 6 para la contraseña.")
-            }
+                    Text("Usa al menos 3 caracteres para el usuario y 6 para la contraseña.")
+                        .font(.appCaption)
+                        .foregroundStyle(AppColor.textSecondary)
+                }
 
-            if let errorMessage {
-                Section {
-                    Text(errorMessage)
-                        .foregroundStyle(.red)
+                AppTextField("Repite contraseña",
+                             text: $passwordConfirmation,
+                             isSecure: true,
+                             textContentType: .newPassword,
+                             submitLabel: .done,
+                             focus: $focusedField,
+                             equals: .passwordConfirmation
+                ) {
+                    signUp()
                 }
             }
 
-            Section {
-                Button("Crear cuenta", action: register)
-                    .frame(maxWidth: .infinity)
-                    .disabled(!canRegister)
+            if let errorMessage {
+                withAnimation(.easeIn(duration: 0.5)) {
+                    Text(errorMessage)
+                        .font(.appFootnote)
+                        .foregroundStyle(AppColor.error)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
             }
+
+            Button("Crear cuenta", action: signUp)
+                .tint(AppColor.primary)
+                .foregroundStyle(AppColor.textPrimary)
+                .buttonStyle(.borderedProminent)
+                .controlSize(.large)
+                .frame(maxWidth: .infinity)
+                .disabled(!canSignUp)
+
+            Spacer()
+        }
+        .padding(.horizontal, 24)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background {
+            AppColor.background
+                .ignoresSafeArea()
+                .onTapGesture {
+                    focusedField = nil
+                }
         }
         .navigationTitle("Crear cuenta")
         .navigationBarTitleDisplayMode(.inline)
     }
 
-    private var canRegister: Bool {
+    private var canSignUp: Bool {
         !username.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
             && !password.isEmpty
             && !passwordConfirmation.isEmpty
     }
 
-    private func register() {
-        guard canRegister else { return }
+    private func signUp() {
+        guard canSignUp else { return }
 
         guard password == passwordConfirmation else {
             errorMessage = "Las contraseñas no coinciden."

@@ -70,7 +70,6 @@ struct LoginView: View {
             }
 
             Button("Iniciar sesión", action: signIn)
-//                .background(AppColor.primary)
                 .tint(AppColor.primary)
                 .foregroundStyle(AppColor.textPrimary)
                 .buttonStyle(.borderedProminent)
