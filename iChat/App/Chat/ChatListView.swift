@@ -40,14 +40,24 @@ struct ChatListView: View {
                 if filteredChats.isEmpty && !searchText.isEmpty {
                     ContentUnavailableView.search(text: searchText)
                 } else {
-                    List(filteredChats) { chat in
-                        NavigationLink(value: AppRoute.chat(id: chat.id)) {
-                            ChatRowView(chat: chat)
+                    List {
+                        ForEach(filteredChats) { chat in
+                            NavigationLink(value: AppRoute.chat(id: chat.id)) {
+                                ChatRowView(chat: chat)
+                            }
+                            .listRowSeparator(
+                                chat.id == filteredChats.first?.id ? .hidden : .automatic,
+                                edges: .top
+                            )
+                            .listRowInsets(
+                                EdgeInsets(top: 0, leading: 12, bottom: 0, trailing: 12)
+                            )
+                            .listRowBackground(AppColor.background)
+                            .listRowSeparatorTint(AppColor.divider)
                         }
-                        .listRowBackground(AppColor.background)
-                        .listRowSeparatorTint(AppColor.divider)
                     }
-                    .listStyle(.automatic)
+                    .listStyle(.plain)
+                    .contentMargins(.horizontal, 0, for: .scrollContent)
                     .scrollContentBackground(.hidden)
                     .scrollDismissesKeyboard(.immediately)
                     .background(AppColor.background)

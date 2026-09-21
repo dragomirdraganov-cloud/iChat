@@ -13,7 +13,7 @@ struct ChatRowView: View {
     var body: some View {
         HStack(spacing: 12) {
             Circle()
-                .fill(AppColor.surface.opacity(0.3))
+                .fill(AppColor.primary.opacity(0.3))
                 .frame(width: 50, height: 50)
                 .overlay {
                     Image(systemName: "person.fill")
@@ -41,6 +41,6 @@ struct ChatRowView: View {
                 .font(.appSubheadline)
             }
         }
-        .padding(.vertical, 4)
+        .padding(.vertical, 12)
     }
 }
