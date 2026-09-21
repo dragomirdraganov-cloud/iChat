@@ -13,11 +13,11 @@ struct ChatRowView: View {
     var body: some View {
         HStack(spacing: 12) {
             Circle()
-                .fill(Color.gray.opacity(0.3))
+                .fill(AppColor.surface.opacity(0.3))
                 .frame(width: 50, height: 50)
                 .overlay {
                     Image(systemName: "person.fill")
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(AppColor.textSecondary)
                 }
             VStack(alignment: .leading, spacing: 6) {
                 HStack {
@@ -28,14 +28,14 @@ struct ChatRowView: View {
 
                     Text(chat.lastMessage?.sentAt ?? .now, style: .time)
                         .font(.appCaption)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(AppColor.textSecondary)
                 }
 
                 HStack(spacing: 4) {
                     Text("\(chat.lastMessage?.sender?.username ?? ""):")
                         .fontWeight(.medium)
                     Text(chat.lastMessage?.content ?? "")
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(AppColor.textSecondary)
                         .lineLimit(1)
                 }
                 .font(.appSubheadline)

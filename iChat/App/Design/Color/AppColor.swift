@@ -8,8 +8,8 @@
 import SwiftUI
 
 enum AppColor {
-    static let primary = Color("PrimaryColor")
-    static let secondary = Color("SecondaryColor")
+    static let primary = Color("AccentColor")
+    static let secondary = Color("TextColor")
     static let background = Color("BackgroundColor")
     static let surface = Color("SurfaceColor")
     static let error = Color("ErrorColor")

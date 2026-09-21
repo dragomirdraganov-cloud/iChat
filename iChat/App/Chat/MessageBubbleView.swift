@@ -23,12 +23,12 @@ struct MessageBubbleView: View {
                     .padding(.vertical, 8)
                     .background {
                         RoundedRectangle(cornerRadius: 16)
-                            .fill(isMine ? Color.blue : Color.gray.opacity(0.2))
+                            .fill(isMine ? AppColor.primary : AppColor.surface.opacity(0.2))
                     }
-                    .foregroundStyle(isMine ? Color.white : Color.primary)
+                    .foregroundStyle(isMine ? AppColor.textPrimary : AppColor.textSecondary)
                 Text(message.sentAt, format: .dateTime.hour().minute())
                     .font(.appCaption2)
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(AppColor.textSecondary)
             }
 
             if !isMine {

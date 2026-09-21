@@ -25,6 +25,9 @@ struct NavigationTabView: View {
             }
             .tabViewStyle(.sidebarAdaptable)
             .tint(AppColor.secondary)
+//            .toolbarBackground(AppColor.background, for: .tabBar)
+//            .toolbarBackground(.visible, for: .tabBar)
+//            .toolbarColorScheme(.dark, for: .tabBar)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(AppColor.background)
@@ -35,6 +38,7 @@ struct NavigationTabView: View {
         switch tab {
         case .chatList:
             ChatListView(viewModel: chatListViewModel)
+                .background(AppColor.background)
         }
     }
 
