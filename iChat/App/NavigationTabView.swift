@@ -24,10 +24,10 @@ struct NavigationTabView: View {
                 }
             }
             .tabViewStyle(.sidebarAdaptable)
-            .tint(Color.primary)
+            .tint(AppColor.secondary)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color.black)
+        .background(AppColor.background)
     }
 
     @ViewBuilder
